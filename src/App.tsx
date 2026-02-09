@@ -8,7 +8,7 @@ import usersFromServer from './api/users';
 import todosFromServer from './api/todos';
 
 const todosWithUsers: Todo[] = todosFromServer.map(todo => {
-  const user = usersFromServer.find(u => u.id === todo.userId);
+  const user = usersFromServer.find(person => person.id === todo.userId);
 
   if (!user) {
     throw new Error(`User with id ${todo.userId} not found`);
@@ -40,11 +40,11 @@ export const App: React.FC = () => {
     setTitleTouched(true);
     setUserTouched(true);
 
-    if (title.trim() === '' || userId === 0) {
+    if (titleError || userError) {
       return;
     }
 
-    const user = users.find(u => u.id === userId);
+    const user = users.find(item => item.id === userId);
 
     if (!user) {
       return;
@@ -76,8 +76,8 @@ export const App: React.FC = () => {
             data-cy="titleInput"
             placeholder="Enter a title"
             value={title}
-            onChange={e => {
-              setTitle(e.target.value);
+            onChange={event => {
+              setTitle(event.target.value);
               setTitleTouched(false);
             }}
           />
@@ -88,8 +88,8 @@ export const App: React.FC = () => {
           <select
             data-cy="userSelect"
             value={userId}
-            onChange={e => {
-              setUserId(Number(e.target.value));
+            onChange={event => {
+              setUserId(Number(event.target.value));
               setUserTouched(false);
             }}
           >
