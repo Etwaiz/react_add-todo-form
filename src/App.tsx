@@ -32,6 +32,9 @@ export const App: React.FC = () => {
     return Math.max(0, ...todos.map(todo => todo.id)) + 1;
   };
 
+  const isTitleInvalid = title.trim() === '';
+  const isUserInvalid = userId === 0;
+
   const titleError = titleTouched && title.trim() === '';
   const userError = userTouched && userId === 0;
 
@@ -40,7 +43,7 @@ export const App: React.FC = () => {
     setTitleTouched(true);
     setUserTouched(true);
 
-    if (titleError || userError) {
+    if (isTitleInvalid || isUserInvalid) {
       return;
     }
 
